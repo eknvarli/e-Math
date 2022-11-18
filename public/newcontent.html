@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | e-Math</title>
+    <title>New Content | e-Math</title>
     <link rel="stylesheet" href="{{url_for('static', filename='styles/global.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <meta name="description" content="e-Math is a social-platform where you can work on mathematical science. Its main purpose is for people from different countries to learn each other's methods, in short, to improve themselves.">
@@ -37,37 +37,31 @@
               <br><br>
               <br><br>
 
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="card">
-                    <h1>Math for everyone!</h1>
-                    <span id="text">
-                      e-Math is a social-platform where you can work on mathematical science. 
-                      Its main purpose is for people from different countries to learn each 
-                      other's methods, in short, to improve themselves.
-                    </span><br>
-                    <form method="get" action="/newcontent">
-                      <div class="form-group">
-                        <label for="namesurname">Name & Surname</label>
-                        <input type="text" class="form-control" name="namesurname" id="namesurname" placeholder="Ex. Ekin Varli">
-                      </div>
-                      <div class="form-group">
-                        <label for="title">Content Title</label>
-                        <input type="text" class="form-control" id="title" name="contenttitle" placeholder="Ex. Learn Trigonometry with Ekin Varli">
-                      </div>
-                      <div class="form-group">
-                        <label for="region">Region</label>
-                        <input type="text" class="form-control" id="region" name="region" placeholder="Ex. Türkiye">
+              <div class="newcontent" align="center">
+                <h2>New Content</h2><br>
+                <form method="get" enctype=multipart/form-data action="/addcontent">
+                    <div class="form-group">
+                      <label for="namesurname">Name & Surname</label>
+                      <input type="text" value="{{namesurname}}" name="namesurname" class="form-control" id="namesurname" placeholder="Ex. Ekin Varli">
+                    </div><br>
+                    <div class="form-group">
+                      <label for="title">Content Title</label>
+                      <input type="text" class="form-control" value="{{title}}" name="title" id="title" placeholder="Ex. Learn Trigonometry with Ekin Varli">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="description">Content Description <small class="text-secondary">(Markdown Supported)</small></label>
+                        <textarea type="text" class="form-control" name="description" id="description" rows="5"></textarea>
                       </div><br>
-                      <button type="submit" class="btn btn-primary w-100">Join for Free</button>
-                    </form>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="card">
-                    image
-                  </div>
-                </div>
+                    <div class="form-group">
+                      <label for="region">Region</label>
+                      <input type="text" class="form-control" value="{{region}}" id="region" name="region" placeholder="Ex. Türkiye">
+                    </div><br>
+                    <div class="form-group">
+                        <label for="file">Content</label><br>
+                        <input type=file name=file id="file">
+                      </div><br>
+                    <button type="submit" class="btn btn-primary w-100">Create Content</button>
+                  </form>
               </div>
 
 

@@ -66,3 +66,13 @@ body {
 .nav-link {
     padding: 15px;
 }
+
+.card {
+    background-color: $body-bg;
+    border: none !important;
+}
+
+.form-control {
+    padding: 15px;
+    border-radius: 0px !important;
+}
