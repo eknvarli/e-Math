@@ -1,0 +1,68 @@
+@import "./libraries/bootstrap";
+@import "./libraries/functions";
+@import "./libraries/variables";
+@import "./libraries/mixins";
+@import "./libraries/root";
+@import "./libraries/reboot";
+@import "./libraries/type";
+@import "./libraries/images";
+@import "./libraries/containers";
+@import "./libraries/grid";
+
+
+// variables
+$body-bg: #fafafa;
+$body-color: #111;
+$special: rgb(38, 38, 75);
+
+
+$theme-colors: (
+    "special": $special,
+);
+
+
+// styles
+.container {
+    max-width: 1000px;
+    width: 100%;
+    padding-top: 10px;
+    font-size: 18px;
+}
+
+body {
+    background-color: $body-bg;
+    color: $body-color;
+}
+
+.btn-primary {
+    background-color: $special;
+    padding: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 0px;
+    border: none !important;
+
+    &:hover {
+        background-color: $special !important;
+    }
+}
+
+.btn-outline-primary {
+    background-color: $body-bg;
+    border-color: $special;
+    color: $special;
+    padding: 15px;
+    border-radius: 0px;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    &:hover {
+        background-color: $body-bg;
+        border-color: $special;
+        color: $special;
+    }
+}
+
+.nav-link {
+    padding: 15px;
+}
