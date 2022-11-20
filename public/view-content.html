@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Content | e-Math</title>
+    <title>{% for data in datas %} {{data[1]}} - {{data[0]}} | e-Math</title>
     <link rel="stylesheet" href="{{url_for('static', filename='styles/global.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <meta name="description" content="e-Math is a social-platform where you can work on mathematical science. Its main purpose is for people from different countries to learn each other's methods, in short, to improve themselves.">
@@ -36,41 +36,21 @@
 
               <br><br>
               <br><br>
-
-              <div class="newcontent" align="center">
-                <h2>Upload Content</h2><br>
-                <form method=post enctype=multipart/form-data>
-                  <input type=file name=file>
-                  <br><br><button type="submit" class="btn btn-primary w-25" onclick="alert('Content uploaded. Please return to content form.')">Upload Content</button>
-                </form>
-
-                <br><br>
-                <br><br>
-
-                <h2>Content Form</h2>
-                <form method="post" action="/addcontent">
-                  <div class="form-group">
-                    <label for="namesurname">Name & Surname</label>
-                    <input type="text" class="form-control" name="namesurname" id="namesurname" placeholder="Ex. Ekin Varli">
-                  </div><br>
-                  <div class="form-group">
-                    <label for="title">Content Title</label>
-                    <input type="text" class="form-control" id="title" name="contenttitle" placeholder="Ex. Learn Trigonometry with Ekin Varli">
-                  </div><br>
-                  <div class="form-group">
-                    <label for="description">Content Description</label>
-                    <textarea type="text" class="form-control" id="description" name="description" rows="5"></textarea>
-                  </div><br>
-                  <div class="form-group">
-                    <label for="region">Region</label>
-                    <input type="text" class="form-control" id="region" name="region" placeholder="Ex. Türkiye">
-                  </div><br>
-                  <div class="form-group">
-                    <label for="filename">Content Filename</label>
-                    <input type="text" class="form-control" id="filename" name="filename" placeholder="Ex. content.mp4">
-                  </div><br><br>
-                  <button type="submit" class="btn btn-primary w-100">Create Content</button>
-                </form>
+              <div class="network" align="left">
+                <h1>{{data[1]}}</h1><br>
+                <span align="left" class="w-50">
+                    <li>Author: {{data[0]}}</li>
+                    <li>Region: {{data[2]}}</li>
+                </span>
+                <br>
+                <video width="500rem" controls>
+                    <source src="../static/uploads/{{data[4]}}" type="video/mp4">
+                </video><br><br>
+                
+                <h3>Description</h3>
+                <span id="text">
+                    {{data[3]}}
+                </span>
               </div>
 
 
@@ -81,6 +61,7 @@
     </div>
 
 
+    {% endfor %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

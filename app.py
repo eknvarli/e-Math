@@ -60,11 +60,7 @@ import time
 UPLOAD_FOLDER = './static/uploads'
 ALLOWED_EXTENSIONS = {
     'mp4',
-    'ogg',
-    'png',
-    'jpg',
-    'jpeg',
-    'gif'
+    # only mp4 support
 }
 
 app = Flask(__name__, template_folder='public')
@@ -106,44 +102,130 @@ def new_content():
     content_title = request.args.get('title')
     region = request.args.get('region')
     return render_template('newcontent.html', namesurname=namesurname, title=content_title, region=region)
-    # return '''
-    # <!doctype html>
-    # <title>Upload new File</title>
-    # <h1>Upload new File</h1>
-    # <form method=post enctype=multipart/form-data>
-    #   <input type=file name=file>
-    #   <input type=submit value=Upload>
-    # </form>
-    # '''
 
 
 @app.route('/addcontent', methods=['POST', 'GET'])
 def add_content():
-    # database
+    if request.method == 'POST':
+        # database
+        connection = sqlite3.connect('./database/contents.db')
+        cursor = connection.cursor()
+
+        cursor.execute(
+            'CREATE TABLE IF NOT EXISTS contents(namesurname TEXT, title TEXT, region TEXT, description TEXT, filename TEXT)')
+
+        # datas
+        namesurname = request.form.get('namesurname')
+        content_title = request.form.get('contenttitle')
+        region = request.form.get('region')
+        description = request.form.get('description')
+        filename = request.form.get('filename')
+
+        # insert datas
+        cursor.execute(
+            f'INSERT INTO contents VALUES("{namesurname}","{content_title}","{region}","{description}","{filename}")')
+
+        if True:
+            connection.commit()
+            connection.close()
+
+        return '''
+        Content Created<br>
+        <a href="/">Back to home.</a>
+        '''
+    else:
+        return redirect('/newcontent')
+
+
+@app.route('/network')
+def network():
     connection = sqlite3.connect('./database/contents.db')
     cursor = connection.cursor()
 
     cursor.execute(
-        'CREATE TABLE IF NOT EXISTS contents(namesurname TEXT, title TEXT, region TEXT, description TEXT, filename TEXT)')
+        'SELECT * FROM contents')
+    datas = cursor.fetchall()
+
+    return render_template('network.html', datas=datas)
 
 
-    # datas
-    namesurname = request.args.get('namesurname')
-    content_title = request.args.get('title')
-    region = request.args.get('region')
-    description = request.args.get('description')
-    filename = request.args.get('file')
+@app.route('/network/<content>')
+def view_content(content):
+    connection = sqlite3.connect('./database/contents.db')
+    cursor = connection.cursor()
 
-
-    # insert datas
     cursor.execute(
-        f'INSERT INTO contents VALUES("{namesurname}","{content_title}","{region}","{description}","{filename}")')
+        f'SELECT * FROM contents WHERE title="{content}"')
+    datas = cursor.fetchall()
 
-    if True:
-        connection.commit()
-        connection.close()
+    return render_template('view-content.html', datas=datas)
 
-    return 'Content added.'
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
+@app.route('/panel', methods=['POST'])
+def view_panel():
+    if request.method == 'POST':
+        password = request.form.get('password')
+        if password == 'aleynam':
+            return render_template('panel.html')
+        else:
+            return redirect('/login')
+    else:
+        return redirect('/login')
+
+
+@app.route('/addpost', methods=['POST'])
+def add_post():
+    connection = sqlite3.connect('./database/posts.db')
+    cursor = connection.cursor()
+    cursor.execute(
+        'CREATE TABLE IF NOT EXISTS posts(title TEXT, author TEXT, post TEXT)')
+    
+    if request.method == 'POST':
+        title = request.form.get('posttitle')
+        author = request.form.get('author')
+        post = request.form.get('post')
+
+        cursor.execute(
+            f'INSERT INTO posts VALUES("{title}","{author}","{post}")')
+        
+        if True:
+            connection.commit()
+            connection.close()
+
+        return '''
+        Post added.
+        <a href="/login">Back to panel</a>
+        '''
+    else:
+        return redirect('/panel')
+
+
+@app.route('/news')
+def news():
+    connection = sqlite3.connect('./database/posts.db')
+    cursor = connection.cursor()
+
+    cursor.execute('SELECT * FROM posts')
+    datas = cursor.fetchall()
+
+    return render_template('news.html', datas=datas)
+
+
+@app.route('/news/<post>')
+def post_details(post):
+    connection = sqlite3.connect('./database/posts.db')
+    cursor = connection.cursor()
+
+    cursor.execute(
+        f'SELECT * FROM posts WHERE title="{post}"')
+    datas = cursor.fetchall()
+
+    return render_template('post-details.html', datas=datas)
 
 
 # run server
