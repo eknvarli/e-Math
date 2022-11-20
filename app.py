@@ -65,7 +65,7 @@ ALLOWED_EXTENSIONS = {
 
 app = Flask(__name__, template_folder='public')
 app.static_folder = 'static'
-app.secret_key = '1f033201deef050a886782b5'
+app.secret_key = 'ENTER_YOUR_SECRET_KEY'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -170,7 +170,7 @@ def login():
 def view_panel():
     if request.method == 'POST':
         password = request.form.get('password')
-        if password == 'aleynam':
+        if password == 'ENTER_ADMINISTRATOR_PASSWORD':
             return render_template('panel.html')
         else:
             return redirect('/login')
